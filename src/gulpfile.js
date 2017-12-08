@@ -29,9 +29,9 @@ gulp.task('clean', function () {
 
 gulp.task('build-img', function () {
 
-    return gulp.src('dist/img/**/*')
+    return gulp.src('dist/assets/img/**/*')
         .pipe(imagemin())
-        .pipe(gulp.dest('dist/img'));
+        .pipe(gulp.dest('dist/assets/img'));
 });
 
 gulp.task('usemin', function () {
@@ -40,7 +40,7 @@ gulp.task('usemin', function () {
             js: [uglify],
             css: [autoprefixer]
         }))
-        .pipe(gulp.dest('dist'));
+        .pipe(gulp.dest('dist/assets'));
 });
 
 gulp.task('server', function () {
@@ -52,14 +52,14 @@ gulp.task('server', function () {
 
     gulp.watch('src/**/*').on('change', browserSync.reload);
 
-    gulp.watch('src/js/**/*.js').on('change', function (event) {
+    gulp.watch('src/assets/js/**/*.js').on('change', function (event) {
         console.log("Linting " + event.path);
         gulp.src(event.path)
             .pipe(jshint())
             .pipe(jshint.reporter(jshintStylish));
     });
 
-    gulp.watch('src/css/**/*.css').on('change', function (event) {
+    gulp.watch('src/assets/css/**/*.css').on('change', function (event) {
         console.log("Linting " + event.path);
         gulp.src(event.path)
             .pipe(csslint())
@@ -67,9 +67,9 @@ gulp.task('server', function () {
     });
 
     gulp.task('sass', function () {
-        return gulp.src('./sass/**/*.scss')
+        return gulp.src('./assets/sass/**/*.scss')
             .pipe(sass.sync().on('error', sass.logError))
-            .pipe(gulp.dest('dist/css'));
+            .pipe(gulp.dest('src/css'));
     });
 
     gulp.task('sass:watch', function () {
