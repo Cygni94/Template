@@ -15,7 +15,7 @@ var gulp = require('gulp'),
     csslint = require('gulp-csslint'),
     autoprefixer = require('gulp-autoprefixer'),
     sass = require('gulp-sass'),
-    svgmin = require('gulp-svgmin')
+    svgmin = require('gulp-svgmin');
 
 gulp.task('default', ['copy'], function () {
     gulp.start('build-img', 'usemin', 'svgmin');
