@@ -1,5 +1,5 @@
 //Mixins//
-@mixin borda-arredondada($raio: 0.3em) {
+@mixin borda-arredondada($raio: 0.3rem) {
     -webkit-border-radius: $raio;
     -moz-border-radius: $raio;
     -o-border-radius: $raio;
