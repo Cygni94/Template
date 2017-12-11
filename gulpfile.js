@@ -14,10 +14,11 @@ var gulp = require('gulp'),
     jshintStylish = require('jshint-stylish'),
     csslint = require('gulp-csslint'),
     autoprefixer = require('gulp-autoprefixer'),
-    sass = require('gulp-sass');
+    sass = require('gulp-sass'),
+    svgmin = require('gulp-svgmin')
 
 gulp.task('default', ['copy'], function () {
-    gulp.start('build-img', 'usemin');
+    gulp.start('build-img', 'usemin', 'svgmin');
 });
 
 gulp.task('copy', ['clean'], function () {
@@ -44,6 +45,12 @@ gulp.task('usemin', function () {
             css: [autoprefixer]
         }))
         .pipe(gulp.dest('dist/assets'));
+});
+
+gulp.task('svgmin', function () {
+    return gulp.src('src/assets/img/**/*.svg')
+        .pipe(svgmin())
+        .pipe(gulp.dest('dist/assets/img'));
 });
 
 gulp.task('server', function () {
