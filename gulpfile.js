@@ -1,6 +1,8 @@
 // Para rodar o browsersync e o sass, utilize npm run gulp server
 // Para gerar a versão dist, utilize npm run gulp
 
+// INSTALE O GULP-SPRITESMITH: https://github.com/twolfson/gulp.spritesmith
+
 var gulp = require('gulp'),
     imagemin = require('gulp-imagemin'),
     clean = require('gulp-clean'),
