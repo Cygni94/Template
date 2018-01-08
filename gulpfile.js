@@ -4,12 +4,13 @@
 // INSTALE O GULP-SPRITESMITH: https://github.com/twolfson/gulp.spritesmith
 
 var gulp = require('gulp'),
-    imagemin = require('gulp-imagemin'),
+    imagemin = require('gulp-image'),
     clean = require('gulp-clean'),
     concat = require('gulp-concat'),
     htmlReplace = require('gulp-html-replace'),
     uglify = require('gulp-uglify'),
     usemin = require('gulp-usemin'),
+    purify = require('gulp-purifycss'),
     cssmin = require('gulp-cssmin'),
     browserSync = require('browser-sync').create(),
     jshint = require('gulp-jshint'),
@@ -20,7 +21,7 @@ var gulp = require('gulp'),
     svgmin = require('gulp-svgmin');
 
 gulp.task('default', ['copy'], function () {
-    gulp.start('build-img', 'usemin', 'svgmin');
+    gulp.start('build-img', 'usemin', 'svgmin', 'purifycss');
 });
 
 gulp.task('copy', ['clean'], function () {
@@ -34,9 +35,18 @@ gulp.task('clean', function () {
 });
 
 gulp.task('build-img', function () {
-
     return gulp.src('dist/assets/img/**/*')
-        .pipe(imagemin())
+        .pipe(imagemin({
+            pngquant: true,
+            optipng: false,
+            zopflipng: true,
+            jpegRecompress: false,
+            mozjpeg: true,
+            guetzli: false,
+            gifsicle: true,
+            svgo: true,
+            concurrent: 100
+        }))
         .pipe(gulp.dest('dist/assets/img'));
 });
 
@@ -47,6 +57,12 @@ gulp.task('usemin', function () {
             css: [autoprefixer]
         }))
         .pipe(gulp.dest('dist/assets'));
+});
+
+gulp.task('purifycss', function () {
+    return gulp.src('./dist/assets/css/**/*.css')
+        .pipe(purify(['./dist/assets/**/*.js', './dist/**/*.html']))
+        .pipe(gulp.dest('./dist/'));
 });
 
 gulp.task('svgmin', function () {

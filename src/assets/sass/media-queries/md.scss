@@ -1,0 +1,15 @@
+@media (min-width: 768px) {
+    .about-sm {
+        display: none;
+    }
+    .papo__callout-img-sm {
+        display: none;
+    }
+    .papo__callout-img-md {
+        text-align: right;
+        padding-right: 0;
+    }
+    .cursos__section-header {
+    padding-bottom: 4rem;
+    }
+}
