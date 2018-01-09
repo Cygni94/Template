@@ -10,10 +10,12 @@
   "author": "Cristiano Coelho",
   "license": "ISC",
   "devDependencies": {
+    "autoprefixer": "^7.2.4",
     "browser-sync": "^2.9.8",
     "gulp": "^3.9.0",
     "gulp-clean-css": "^3.9.2",
     "gulp-htmlmin": "^4.0.0",
+    "gulp-postcss": "^7.0.1",
     "gulp-rev": "^8.1.1",
     "gulp-sass": "^3.1.0",
     "gulp-sourcemaps": "^2.6.3",
