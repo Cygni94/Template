@@ -5,7 +5,7 @@ document.getElementById('form-busca').onsubmit = function() {
   }	
 };
 
-var banners = ["img/destaque-home-2.png"];
+var banners = ["assets/img/destaque-home-2.png"];
 function trocaBanner() {
 	document.querySelector('.destaque img').src = banners[0];
 	banners.reverse();

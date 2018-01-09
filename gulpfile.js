@@ -9,57 +9,23 @@ let gulp = require('gulp'),
     cleanCSS = require('gulp-clean-css'),
     sourcemaps = require('gulp-sourcemaps');
 
-gulp.task('default', ['copy'], function () {
-    gulp.start('build-img', 'usemin', 'svgmin');
-});
 
-gulp.task('copy', ['clean'], function () {
-    return gulp.src('src/**/*')
-        .pipe(gulp.dest('dist'));
-});
 
-gulp.task('clean', function () {
-    return gulp.src('dist')
-        .pipe(clean());
-});
+// Static Server + watching scss/html files
+gulp.task('server', ['sass'], function () {
 
-gulp.task('build-img', function () {
-
-    return gulp.src('dist/assets/img/**/*')
-        .pipe(imagemin())
-        .pipe(gulp.dest('dist/assets/img'));
-});
-
-gulp.task('usemin', function () {
-    return gulp.src('dist/**/*.html')
-        .pipe(usemin({
-            js: [uglify],
-            css: [autoprefixer]
-        }))
-        .pipe(gulp.dest('dist/assets'));
-});
-
-gulp.task('svgmin', function () {
-    return gulp.src('src/assets/img/**/*.svg')
-        .pipe(svgmin())
-        .pipe(gulp.dest('dist/assets/img'));
-});
-
-gulp.task('server', function () {
     browserSync.init({
-        server: {
-            baseDir: 'src'
-        }
+        server: "./src"
     });
 
-    gulp.watch('src/**/*').on('change', browserSync.reload);
+    gulp.watch("src/assets/sass/**/*.scss", ['sass']);
+    gulp.watch("src/*.html").on('change', browserSync.reload);
+});
 
-    gulp.watch('src/assets/sass/**/*.scss').on('change', function (event) {
-        return gulp.src('src/assets/sass/style.scss')
-            .pipe(sass(gulp.src))
-            .pipe(sourcemaps.init())
-            .pipe(cleanCSS())
-            .pipe(sourcemaps.write())
-            .pipe(gulp.dest('src/assets/css'));
-    });
+// Compile sass into CSS & auto-inject into browsers
+gulp.task('sass', function () {
+    return gulp.src("src/assets/sass/*.scss")
+        .pipe(sass())
+        .pipe(gulp.dest("src/assets/css"))
+        .pipe(browserSync.stream());
 });
