@@ -3,21 +3,11 @@
 
 // INSTALE O GULP-SPRITESMITH: https://github.com/twolfson/gulp.spritesmith
 
-var gulp = require('gulp'),
-    imagemin = require('gulp-imagemin'),
-    clean = require('gulp-clean'),
-    concat = require('gulp-concat'),
-    htmlReplace = require('gulp-html-replace'),
-    uglify = require('gulp-uglify'),
-    usemin = require('gulp-usemin'),
-    cssmin = require('gulp-cssmin'),
+let gulp = require('gulp'),
     browserSync = require('browser-sync').create(),
-    jshint = require('gulp-jshint'),
-    jshintStylish = require('jshint-stylish'),
-    csslint = require('gulp-csslint'),
-    autoprefixer = require('gulp-autoprefixer'),
     sass = require('gulp-sass'),
-    svgmin = require('gulp-svgmin');
+    cleanCSS = require('gulp-clean-css'),
+    sourcemaps = require('gulp-sourcemaps');
 
 gulp.task('default', ['copy'], function () {
     gulp.start('build-img', 'usemin', 'svgmin');
@@ -64,23 +54,12 @@ gulp.task('server', function () {
 
     gulp.watch('src/**/*').on('change', browserSync.reload);
 
-    gulp.watch('src/assets/js/**/*.js').on('change', function (event) {
-        console.log("Linting " + event.path);
-        gulp.src(event.path)
-            .pipe(jshint())
-            .pipe(jshint.reporter(jshintStylish));
-    });
-
-    gulp.watch('src/assets/css/**/*.css').on('change', function (event) {
-        console.log("Linting " + event.path);
-        gulp.src(event.path)
-            .pipe(csslint())
-            .pipe(csslint.reporter());
-    });
-
     gulp.watch('src/assets/sass/**/*.scss').on('change', function (event) {
         return gulp.src('src/assets/sass/style.scss')
             .pipe(sass(gulp.src))
+            .pipe(sourcemaps.init())
+            .pipe(cleanCSS())
+            .pipe(sourcemaps.write())
             .pipe(gulp.dest('src/assets/css'));
     });
 });
