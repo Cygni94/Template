@@ -7,14 +7,10 @@ var gulp = require('gulp'),
     browserSync = require('browser-sync').create(),
     sass = require('gulp-sass'),
     htmlmin = require('gulp-htmlmin'),
-    rev = require('gulp-rev'),
     imagemin = require('gulp-image'),
     uglify = require('gulp-uglify'),
     usemin = require('gulp-usemin'),
-    cleanCSS = require('gulp-clean-css'),
     sourcemaps = require('gulp-sourcemaps'),
-    postcss = require('gulp-postcss'),
-    uncss = require('postcss-uncss'),
     del = require('del'),
     autoprefixer = require('autoprefixer');
 
@@ -81,7 +77,6 @@ gulp.task('sass', function () {
         .pipe(gulp.dest("src/assets/css"))
         .pipe(sourcemaps.init())
         .pipe(postcss([autoprefixer()]))
-        .pipe(cleanCSS({compatibility: 'ie8'}))
         .pipe(sourcemaps.write('sourcemaps'))
         .pipe(gulp.dest("src/assets/css"))
         .pipe(browserSync.stream());
