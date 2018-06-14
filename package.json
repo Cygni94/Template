@@ -27,6 +27,8 @@
     "uncss": "^0.16.1"
   },
   "dependencies": {
+    "bootstrap": "^4.0.0",
+    "jquery": "^1.9.1",
     "popper.js": "^1.12.9"
   }
 }
